@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Image Captioning</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<style>
+*{
+    padding: 0;
+    margin: 0;
+}
+body {
+    background-color: #1c2b2d;
+    color : white;
+    text-align : center;
+}
+.heading{
+    font-size : 4.5rem;
+    margin : 40px auto;
+    font-family: 'Caveat Brush', cursive;
+}
+.container{
+	margin-top: 20px;
+}
+.form{
+	margin-top: 20px;
+}
+.image-container{
+    display: block;
+    width : 500px;
+    height : 500px;
+    border: 3px solid black;
+	overflow: auto;
+	margin: auto;
+	position: relative;
+}
+
+img{
+	max-width: 100%;
+    max-height: 100%;
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+	display: block;
+}
+
+.caption{
+	font-size: 1.5rem;
+}
+.btn{
+	font-size: 1.5rem;
+	padding: 0.5rem 1rem;
+	margin-left: 1rem;
+}
+.btn-group{
+	margin: auto;
+}
+</style>
+
+
+</head>
+<body>
+
+	<h1 class="heading">
+		Image Captioning
+	</h1>
+
+	<div class="container">
+		<label for="file" style="cursor: pointer;">
+			{% if your_result %}
+				<div class="image-container">
+					<img id="input" src="{{your_result['image']}}">
+				</div>
+				<p class="caption"> Caption : <span  id="caption-text" style="color: lightgreen">{{ your_result['caption'] }} </span>  </p>
+			{% else %}
+				<div class="image-container">
+					<img id="input" src="./static/upload.jpg" width="100%" alt="your image" />
+				</div>
+			{% endif %}
+		</label>
+		
+		<form class="form-inline" method="POST" action="/" enctype="multipart/form-data"> 
+			<input id="file" class="form-control" type="file" name="userfile" onchange="readURL(this);" style="display : none;">
+			<div class="btn-group">
+				<label for="file">
+					<span class="btn btn-primary btn-lg">New Image</span>
+				</label>
+				<button type="submit" class="btn btn-warning btn-lg">Generate Caption </button>
+
+				{% if your_result %}
+					<button id="voice" class="btn btn-success btn-lg" onclick="playAudio(event);">Play Audio</button>
+				{% else %}
+					<button id="voice" class="btn btn-success btn-lg" disabled onclick="playAudio(event);">Play Audio</button>
+				{% endif %}
+
+
+			</div>
+		</form>
+		
+		
+		<br>
+		<br>
+
+	</div>
+
+</body>
+
+<script>
+	function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#input')
+                    .attr('src', e.target.result)
+					.width('100%');
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+	var img = document.querySelector('.image-container').firstChild;
+	img.onchange = function() {
+    	if(img.height > img.width) {
+    	    img.height = '100%';
+    	    img.width = 'auto';
+    	}
+	};
+
+	function playAudio(event){
+		event.preventDefault();
+		var msg = new SpeechSynthesisUtterance();
+		msg.text = $('#caption-text').text();
+		console.log(msg.text);
+		window.speechSynthesis.speak(msg);
+	}
+</script>
+</html>
