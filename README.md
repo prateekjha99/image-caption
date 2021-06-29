@@ -13,3 +13,8 @@
 
 # Generator view
 <img src="./images/generator.jpg" alt="Generator view" />
+
+# Run
+1. install all libraries specified in import
+2. run -> python app.py 
+3. Open <a href="http://localhost:5000"> http://localhost:5000 </a> in browser
