@@ -9,7 +9,7 @@
 <hr />
 
 # Architecture
-<img src="./images/architecture.jpg" alt="Architecture of CNN LSTM model" />
+<img src="./images/architecture.JPG" alt="Architecture of CNN LSTM model" />
 
 # Generator view
 <img src="./images/generator.jpg" alt="Generator view" />
