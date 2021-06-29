@@ -6,3 +6,10 @@
 # Working
 <img src="./images/web_app_working.gif" alt="Working web app" />
 
+<hr />
+
+# Architecture
+<img src="./images/architecture.jpg" alt="Architecture of CNN LSTM model" />
+
+# Generator view
+<img src="./images/generator.jpg" alt="Generator view" />
